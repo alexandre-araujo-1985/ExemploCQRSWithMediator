@@ -24,4 +24,13 @@ public class FakeDataStore
 
 	public async Task<IEnumerable<Cliente>> ListarClientes() =>
 		await Task.FromResult(_clientes);
+
+	public async Task<Cliente> ObterClientePorId(int id) =>
+		await Task.FromResult(_clientes.Single(c => c.Id == id));
+
+	public async Task EventoOcorrido(Cliente cliente, string evento)
+	{
+		_clientes.Single(c => c.Id == cliente.Id).Nome = $"{cliente.Nome} evento: {evento}";
+		await Task.CompletedTask;
+	}
 }
