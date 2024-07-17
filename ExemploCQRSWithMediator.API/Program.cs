@@ -5,6 +5,8 @@ using ExemploCQRSWithMediator.Domain.Handlers;
 using ExemploCQRSWithMediator.Domain.Queries;
 using ExemploCQRSWithMediator.Domain.Commands;
 using ExemploCQRSWithMediator.Domain.Notifications;
+using ExemploCQRSWithMediator.Domain.Behaviors;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,7 @@ builder.Services.AddTransient<IRequestHandler<ObterClientePorIdQuery, Cliente>, 
 builder.Services.AddTransient<IRequestHandler<AdicionarClienteCommand, Cliente>, AdicionarProdutoHandler>();
 builder.Services.AddTransient<INotificationHandler<ClienteAddedNotification>, EmailHandler>();
 builder.Services.AddSingleton<FakeDataStore>();
-//builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 var app = builder.Build();
 
